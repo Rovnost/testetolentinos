@@ -1,0 +1,24 @@
+.height-170 {
+    height: 170px !important;
+}
+
+.margin-right-24 {
+    margin-right: 24px;
+}
+
+.margin-bottom-32 {
+    margin-bottom: 32px;
+}
+
+.title-icon-properties {
+    margin-top: 4px;
+    margin-right: 8px;
+}
+
+.flex {
+    display: flex;
+}
+
+.outline-none:focus {
+    outline: none !important;
+}

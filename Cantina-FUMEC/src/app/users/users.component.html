@@ -1,0 +1,70 @@
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div>
+            <h1>Usuários</h1>
+          </div>
+          <div>
+            <button mat-raised-button class="outline-none" (click)="openDialog(0)">
+              <mat-icon>add</mat-icon>
+              Novo Usuário
+            </button>
+            <!-- <button class="float-sm-right"><mat-icon>add</mat-icon>
+              Novo Usuário
+            </button> -->
+          </div>
+        </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content padding-0-10-0-10">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="padding-table">
+          <table class="table-properties">
+            <thead>
+              <tr>
+                <th class="padding-left-16">Imagem</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th>Localização</th>
+                <th>Idioma</th>
+                <th>Tipo</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td><img src="{{user.photoUrl}}" class="elevation-2 img-properties margin-left-16" alt="User Image"></td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.cpf}}</td>
+                <td>{{user.phoneNumber}}</td>
+                <td>{{user.location}}</td>
+                <td>{{user.settingsUser.language}}</td>
+                <td>{{user.settingsUser.type}}</td>
+                <td>
+                  <button mat-mini-fab color="primary" (click)="openDialog(user.id)" class="margin-right-10 size-35 outline-none">
+                    <mat-icon class="font-size-19" matTooltip="Editar" [matTooltipPosition]="'above'">edit</mat-icon>
+                  </button>
+                  <button mat-mini-fab color="primary" (click)="openDeleteDialog(user.id)" class="size-35 outline-none">
+                    <mat-icon class="font-size-19" matTooltip="Deletar" [matTooltipPosition]="'above'">delete</mat-icon>
+                  </button>
+              </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->

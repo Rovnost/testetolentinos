@@ -1,0 +1,15 @@
+.padding-0-10-0-10{
+    padding: 0px 10px 0px 10px;
+}
+
+.margin-left-10 {
+    margin-left: 10px !important;
+}
+
+.margin-right-unset {
+    margin-right: unset !important;
+}
+
+.outline-none:focus {
+    outline: none !important;
+}

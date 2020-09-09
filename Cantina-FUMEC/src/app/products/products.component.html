@@ -1,0 +1,86 @@
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              <h1>Produtos</h1>
+            </div>
+            <div>
+              <button mat-raised-button class="outline-none" (click)="openDialog(0)">
+                <mat-icon>add</mat-icon>
+                Novo Produto
+              </button>
+              <!-- <button class="float-sm-right"><mat-icon>add</mat-icon>
+                Novo Usuário
+              </button> -->
+            </div>
+          </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+      <!-- Main content -->
+      <section class="content padding-0-10-0-10">
+        <!-- Default box -->
+        <div class="card">
+          <div fxLayout="row" fxLayoutAlign="space-between center"  class="card-header">
+            <div fxLayout="column">
+              <h3 *ngIf="!this.selectForm.value.categoriaControl.length > 0" class="card-title">Selecione uma categoria</h3>
+              <h3 *ngIf="this.selectForm.value.categoriaControl.length > 0" class="card-title">{{this.selectForm.value.categoriaControl}}</h3>
+            </div>
+            <div fxLayout="column" class="card-tools">
+              <form [formGroup]="selectForm">
+              <mat-form-field class="font-size-10" appearance="fill">
+                <mat-label>Categorias</mat-label>
+                <mat-select (selectionChange)="trocarProdutos($event)" formControlName="categoriaControl">
+                  <mat-option *ngFor="let categoria of categories" [value]="categoria.cardTitle">
+                    {{categoria.cardTitle}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </form>
+            </div>
+          </div>
+          <div *ngIf="this.selectForm.value.categoriaControl.length > 0" class="padding-table">
+            <table class="table-properties">
+              <thead>
+                <tr>
+                  <th class="padding-left-16">Imagem</th>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Preço</th>
+                  <th>Código de barras</th>
+                  <th>Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of products">
+                  <td><img src="{{product.imagePath}}" class="elevation-2 img-properties margin-left-16" alt="Product Image"></td>
+                  <td>{{product.name}}</td>
+                  <td>{{product.description}}</td>
+                  <td>{{product.price | currency:'BRL'}}</td>
+                  <td>
+                    <ngx-barcode *ngFor="let bcValue of product.id.split('\n')" [bc-value]="bcValue" [bc-format]="CODE128" [bc-width]="1" [bc-height]="20" [bc-display-value]="true"></ngx-barcode>
+                  </td>
+                  <td>
+                    <button mat-mini-fab color="primary" (click)="openDialog(product.id)" class="margin-right-10 size-35 outline-none">
+                      <mat-icon class="font-size-19" matTooltip="Editar" [matTooltipPosition]="'above'">edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="primary" (click)="openDeleteDialog(product.id)" class="margin-right-10 size-35 outline-none">
+                      <mat-icon class="font-size-19" matTooltip="Deletar" [matTooltipPosition]="'above'">delete</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="primary" (click)="inserirNoCarrinho(product.id)" class="size-35 outline-none">
+                        <mat-icon class="font-size-19" matTooltip="Adicionar ao carrinho" [matTooltipPosition]="'above'">add_shopping_cart</mat-icon>
+                    </button>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+  
+      </section>
+      <!-- /.content -->

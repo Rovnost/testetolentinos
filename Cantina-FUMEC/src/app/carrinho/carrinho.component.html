@@ -1,0 +1,111 @@
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              <h1>Carrinho</h1>
+            </div>
+            <div>
+                <mat-form-field class="inputs font-size-11" appearance="legacy">
+                    <mat-label>Pesquisar</mat-label>
+                    <input (keyup.enter)="search()" matInput [(ngModel)]="valorBusca" placeholder="Insira o ID ou nome de um produto" name="valorBusca" required maxlength="900" autocomplete="off">
+                    <mat-hint>Aperte ENTER ou clique no botão pesquisar</mat-hint>
+                  </mat-form-field>
+                  <button mat-mini-fab color="primary" (click)="search()" class="margin-right-10 size-35 outline-none button-search">
+                    <mat-icon class="font-size-19" matTooltip="Pesquisar" [matTooltipPosition]="'below'">search</mat-icon>
+                  </button>
+              <!-- <button class="float-sm-right"><mat-icon>add</mat-icon>
+                Novo Usuário
+              </button> -->
+            </div>
+          </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+      <!-- Main content -->
+      <section class="content padding-0-10-0-10">
+  
+        <!-- Default box -->
+        <div class="card">
+          <div class="padding-table">
+            <table class="table-properties">
+              <thead *ngIf="!pesquisaAtiva">
+                <tr>
+                <th class="padding-left-16">Imagem</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Valor Unitário</th>
+                <th>Código de barras</th>
+                <th>Valor Total</th>
+                <th class="padding-left-48">Quantidade</th>
+                </tr>
+              </thead>
+              <thead *ngIf="pesquisaAtiva">
+                <tr>
+                <th class="padding-left-16">Imagem</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Valor Unitário</th>
+                <th>Código de barras</th>
+              </thead>
+              <tbody *ngIf="!pesquisaAtiva">
+                <tr *ngFor="let product of products">
+                    <td><img src="{{product.cartItem.imagePath}}" class="elevation-2 img-properties margin-left-16" alt="Product Image"></td>
+                    <td>{{product.cartItem.name}}</td>
+                    <td>{{product.cartItem.description}}</td>
+                    <td>{{product.cartItem.price | currency:'BRL'}}</td>
+                    <td>
+                      <ngx-barcode *ngFor="let bcValue of product.cartItem.id.split('\n')" [bc-value]="bcValue" [bc-format]="CODE128" [bc-width]="1" [bc-height]="20" [bc-display-value]="true"></ngx-barcode>
+                    </td>
+                    <td>{{product.cartItem.price * product.quantity | currency:'BRL'}}</td>
+                  <td>
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                        <button  (click)="alterarQuantidade(0, product.cartItem.id)" class="btn0" type="button">
+                            <i matSuffix class="material-icons icon-minus">exposure_neg_1</i>
+                        </button>
+                        <button class="unit unidade" type="button">{{product.quantity}}
+                        </button>
+                        <button (click)="alterarQuantidade(1, product.cartItem.id)" class="btn0" type="button">
+                            <i matSuffix class="material-icons icon-plus">exposure_plus_1</i>
+                        </button>
+                        <span (click)="excluir()" class="icon-cancel-mobile margin-left-27" matTooltip="Excluir item" matTooltipclass="orange"
+                        aria-hidden="true"></span>
+                      </div>
+                </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="pesquisaAtiva">
+                <tr *ngFor="let product of searchProducts">
+                    <td><img src="{{product.imagePath}}" class="elevation-2 img-properties margin-left-16" alt="Product Image"></td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.description}}</td>
+                    <td>{{product.price | currency:'BRL'}}</td>
+                    <td>
+                      <ngx-barcode *ngFor="let bcValue of product.id.split('\n')" [bc-value]="bcValue" [bc-format]="CODE128" [bc-width]="1" [bc-height]="20" [bc-display-value]="true"></ngx-barcode>
+                    </td>
+                  <td>
+                    <button (click)="inserirNoCarrinho(product.id)" mat-raised-button class="outline-none">
+                        <mat-icon>add_shopping_cart</mat-icon>
+                        Adicionar ao carrinho
+                      </button>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+          <div *ngIf="!pesquisaAtiva" fxLayout="row" fxLayoutAlign="space-between center" class="background-rgba padding-right-left-24">
+              <div>
+                <h4>Total: {{valorTotal | currency:'BRL'}}</h4>
+              </div>
+              <div>
+                  Finalizar
+              </div>
+          </div>
+        </div>
+        <!-- /.card -->
+  
+      </section>
+      <!-- /.content -->

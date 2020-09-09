@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Excluindo {{nome}}</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Deseja continuar a operação?</h3>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close class="outline-none">Cancelar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" class="outline-none" 
+  (click)="deletar()" cdkFocusInitial>Sim</button>
+</mat-dialog-actions>

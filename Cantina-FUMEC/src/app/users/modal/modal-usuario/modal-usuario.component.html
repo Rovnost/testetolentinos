@@ -1,0 +1,102 @@
+<div *ngIf="this.data > 0" class="flex">
+      <i class="material-icons title-icon-properties">portrait</i>
+      <h1 mat-dialog-title>Editando {{this.dataSpecificUser.name}}</h1>
+</div>
+<div *ngIf="this.data === 0" class="flex">
+  <i class="material-icons title-icon-properties">new_releases</i>
+  <h1 mat-dialog-title>Novo Usuário</h1>
+</div>
+<mat-dialog-content class="mat-typography height-170">
+    <form [formGroup]="usuarioForm">
+    <div fxLayout="row" fxLayoutAlign="space-around center" class="margin-bottom-32">
+      <div fxLayout="column" class="margin-right-24">
+      <mat-form-field class="inputs" appearance="legacy">
+        <mat-label>Nome</mat-label>
+        <input id="cadastroUsuario" matInput formControlName="nome" required maxlength="200" autocomplete="off">
+        <mat-error *ngIf="usuarioForm.get('nome').hasError('required')">Campo obrigatório</mat-error>
+        <mat-hint>Ex: Max Filipe</mat-hint>
+        <i matSuffix class="material-icons">person</i>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-right-24">
+      <mat-form-field class="inputs" appearance="legacy">
+        <mat-label>E-mail</mat-label>
+        <input id="cadastroUsuario" matInput formControlName="email" required maxlength="200" autocomplete="off">
+        <mat-error *ngIf="usuarioForm.get('email').hasError('email') 
+        && !usuarioForm.get('email').hasError('required')">E-mail inválido</mat-error>
+        <mat-error *ngIf="usuarioForm.get('email').hasError('emailExistente')">E-mail já cadastrado</mat-error>
+        <mat-error *ngIf="usuarioForm.get('email').hasError('required')">Campo obrigatório</mat-error>
+        <mat-hint>Ex: teste@test.com</mat-hint>
+        <i matSuffix class="material-icons">email</i>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-right-24">
+      <mat-form-field class="inputs" appearance="legacy">
+        <mat-label>CPF</mat-label>
+        <input id="cadastroUsuario" matInput formControlName="cpf" required pattern="^[0-9]*$" maxlength="14" mask="000.000.000-00" autocomplete="off">
+        <mat-error *ngIf="usuarioForm.get('cpf').hasError('required')">Campo obrigatório</mat-error>
+        <mat-error *ngIf="usuarioForm.get('cpf').hasError('cpfExistente')">CPF já cadastrado</mat-error>
+        <mat-error *ngIf="usuarioForm.get('cpf').hasError('invalidoCPF')
+        && !usuarioForm.get('cpf').hasError('required')">CPF inválido</mat-error>
+        <mat-hint>Ex: 12475815478</mat-hint>
+        <i matSuffix class="material-icons">privacy_tip</i>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-right-24">
+      <mat-form-field class="inputs" appearance="legacy">
+        <mat-label>Telefone</mat-label>
+        <input id="cadastroUsuario" matInput formControlName="telefone" required
+          maxlength="20" autocomplete="off">
+        <mat-error *ngIf="usuarioForm.get('telefone').hasError('required')">Campo obrigatório</mat-error>
+        <!-- <mat-error *ngIf="usuarioForm.get('telefone').hasError('pattern')">Telefone inválido</mat-error> -->
+        <mat-hint>Ex: 30718459</mat-hint>
+        <i matSuffix class="material-icons">call</i>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Foto URL</mat-label>
+      <input id="cadastroUsuario" matInput formControlName="imagem" required maxlength="900" autocomplete="off">
+      <mat-error *ngIf="usuarioForm.get('imagem').hasError('required')">Campo obrigatório</mat-error>
+      <mat-hint>Ex: https://imgur.com/ccefefsEFd</mat-hint>
+      <i matSuffix class="material-icons">insert_photo</i>
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Localização</mat-label>
+      <input id="cadastroUsuario" matInput formControlName="location" required maxlength="200" autocomplete="off">
+      <mat-error *ngIf="usuarioForm.get('location').hasError('required')">Campo obrigatório</mat-error>
+      <mat-hint>Ex: São Paulo</mat-hint>
+      <i matSuffix class="material-icons">map</i>
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Idioma</mat-label>
+      <input id="cadastroUsuario" matInput formControlName="idioma" required maxlength="200" autocomplete="off">
+      <mat-error *ngIf="usuarioForm.get('idioma').hasError('required')">Campo obrigatório</mat-error>
+      <mat-hint>Ex: en-US</mat-hint>
+      <i matSuffix class="material-icons">language</i>
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Tipo</mat-label>
+      <input id="cadastroUsuario" matInput formControlName="tipo" required minlength="2"
+        maxlength="200" autocomplete="off">
+      <mat-error *ngIf="usuarioForm.get('tipo').hasError('required')">Campo obrigatório</mat-error>
+      <mat-hint>Ex: admin</mat-hint>
+      <i matSuffix class="material-icons">engineering</i>
+    </mat-form-field>
+  </div>
+</div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close class="outline-none">Cancelar</button>
+  <button [disabled]="!usuarioForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true"
+  (click)="salvar(this.data)" class="outline-none" cdkFocusInitial>Salvar</button>
+</mat-dialog-actions>

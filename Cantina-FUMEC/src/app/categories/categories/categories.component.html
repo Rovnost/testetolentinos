@@ -1,0 +1,62 @@
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              <h1>Categorias</h1>
+            </div>
+            <div>
+              <button mat-raised-button class="outline-none" (click)="openDialog(0)">
+                <mat-icon>add</mat-icon>
+                Nova Categoria
+              </button>
+              <!-- <button class="float-sm-right"><mat-icon>add</mat-icon>
+                Novo Usuário
+              </button> -->
+            </div>
+          </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+      <!-- Main content -->
+      <section class="content padding-0-10-0-10">
+  
+        <!-- Default box -->
+        <div class="card">
+          <div class="padding-table">
+            <table class="table-properties">
+              <thead>
+                <tr>
+                  <th class="padding-left-16">Imagem</th>
+                  <th>Título</th>
+                  <th>Sub Título</th>
+                  <th>Total Produtos</th>
+                  <th>Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let category of categories">
+                  <td><img src="{{category.imagem}}" class="elevation-2 img-properties margin-left-16" alt="Category Image"></td>
+                  <td>{{category.cardTitle}}</td>
+                  <td>{{category.cardSubtitle}}</td>
+                  <td class="padding-left-40">{{category.menu?.length || '0' }}</td>
+                  <td>
+                    <button mat-mini-fab color="primary" (click)="openDialog(category.id)" class="margin-right-10 size-35 outline-none">
+                      <mat-icon class="font-size-19" matTooltip="Editar" [matTooltipPosition]="'above'">edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="primary" (click)="openDeleteDialog(category.id)" class="size-35 outline-none">
+                      <mat-icon class="font-size-19" matTooltip="Deletar" [matTooltipPosition]="'above'">delete</mat-icon>
+                    </button>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+  
+      </section>
+      <!-- /.content -->

@@ -1,0 +1,45 @@
+<div *ngIf="this.data > 0" class="flex">
+    <i class="material-icons title-icon-properties">edit</i>
+    <h1 mat-dialog-title>Editando {{this.dataSpecificCategory.cardTitle}}</h1>
+</div>
+<div *ngIf="this.data === 0" class="flex">
+<i class="material-icons title-icon-properties">new_releases</i>
+<h1 mat-dialog-title>Nova Categoria</h1>
+</div>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="categoriaForm">
+  <div fxLayout="row" fxLayoutAlign="space-around center" class="margin-bottom-32">
+    <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Título</mat-label>
+      <input  matInput formControlName="titulo" required maxlength="200" autocomplete="off">
+      <mat-error *ngIf="categoriaForm.get('titulo').hasError('required')">Campo obrigatório</mat-error>
+    <mat-error *ngIf="categoriaForm.get('titulo').hasError('tituloExistente')">Categoria já cadastrada</mat-error>
+      <mat-hint>Ex: Sobremesas</mat-hint>
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Sub Título</mat-label>
+      <input matInput formControlName="subtitulo" required maxlength="200" autocomplete="off">
+      <mat-error *ngIf="categoriaForm.get('subtitulo').hasError('required')">Campo obrigatório</mat-error>
+      <mat-hint>Ex: Gelados</mat-hint>
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Imagem</mat-label>
+      <input matInput formControlName="imagem" required maxlength="900" autocomplete="off">
+      <mat-error *ngIf="categoriaForm.get('imagem').hasError('required')">Campo obrigatório</mat-error>
+      <mat-hint>Ex: https://imgur.com/ccefefsEFd</mat-hint>
+      <i matSuffix class="material-icons">insert_photo</i>
+    </mat-form-field>
+  </div>
+</div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+<button mat-raised-button mat-dialog-close class="outline-none">Cancelar</button>
+<button [disabled]="!categoriaForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true"
+(click)="salvar(this.data)" class="outline-none" cdkFocusInitial>Salvar</button>
+</mat-dialog-actions>

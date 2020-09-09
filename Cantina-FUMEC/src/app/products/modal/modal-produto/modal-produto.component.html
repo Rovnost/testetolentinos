@@ -1,0 +1,77 @@
+<div *ngIf="this.data !== 0" class="flex">
+    <i class="material-icons title-icon-properties">edit</i>
+    <h1 mat-dialog-title>Editando {{this.dataSpecificProduct.name}}</h1>
+</div>
+<div *ngIf="this.data === 0" class="flex">
+<i class="material-icons title-icon-properties">new_releases</i>
+<h1 mat-dialog-title>Novo Produto</h1>
+</div>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="produtoForm">
+  <div fxLayout="row" fxLayoutAlign="start center" class="margin-bottom-32">
+    <div fxLayout="column" class="margin-right-24">
+      <mat-form-field class="font-size-10" appearance="fill">
+        <mat-label>Categoria</mat-label>
+        <mat-select placeholder="{{selecionada}}" formControlName="categoria" required>
+          <mat-option *ngFor="let categoria of categories" [value]="categoria.id">
+            {{categoria.cardTitle}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="produtoForm.get('categoria').hasError('required')">Campo obrigatório</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Nome</mat-label>
+      <input  matInput formControlName="nome" required maxlength="200" autocomplete="off">
+      <mat-error *ngIf="produtoForm.get('nome').hasError('required')">Campo obrigatório</mat-error>
+      <mat-error *ngIf="produtoForm.get('nome').hasError('nomeExistente')">Produto já cadastrado</mat-error>
+      <mat-hint>Ex: Geladeira</mat-hint>
+    </mat-form-field>
+  </div>
+  <div *ngIf="this.data === 0" fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>ID</mat-label>
+      <input  matInput formControlName="id" required maxlength="200" autocomplete="off">
+      <mat-error *ngIf="produtoForm.get('id').hasError('required')">Campo obrigatório</mat-error>
+      <mat-error *ngIf="produtoForm.get('id').hasError('idExistente')">ID já cadastrado</mat-error>
+      <mat-hint>Ex: morango</mat-hint>
+    </mat-form-field>
+  </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="space-around center" class="margin-bottom-32">
+  <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="description" required maxlength="200" autocomplete="off">
+      <mat-error *ngIf="produtoForm.get('description').hasError('required')">Campo obrigatório</mat-error>
+      <mat-hint>Ex: Aparelho eletrônico</mat-hint>
+    </mat-form-field>
+  </div>
+  <div fxLayout="column" class="margin-right-24">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Preço</mat-label>
+      <input matInput formControlName="price" required maxlength="200" autocomplete="off">
+      <mat-error *ngIf="produtoForm.get('price').hasError('required')">Campo obrigatório</mat-error>
+      <mat-error *ngIf="produtoForm.get('price').hasError('priceInvalido')">Siga o padrão: 25.9 ou 25</mat-error>
+      <mat-hint>Ex: Gelados</mat-hint>
+      <i matSuffix class="material-icons">monetization_on</i>
+    </mat-form-field>
+  </div>
+  <div fxLayout="column">
+    <mat-form-field class="inputs" appearance="legacy">
+      <mat-label>Imagem</mat-label>
+      <input matInput formControlName="imagem" required maxlength="900" autocomplete="off">
+      <mat-error *ngIf="produtoForm.get('imagem').hasError('required')">Campo obrigatório</mat-error>
+      <mat-hint>Ex: https://imgur.com/ccefefsEFd</mat-hint>
+      <i matSuffix class="material-icons">insert_photo</i>
+    </mat-form-field>
+  </div>
+</div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+<button mat-raised-button mat-dialog-close class="outline-none">Cancelar</button>
+<button [disabled]="!produtoForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true"
+(click)="salvar(this.data)" class="outline-none" cdkFocusInitial>Salvar</button>
+</mat-dialog-actions>
